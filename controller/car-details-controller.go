@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"go_concurrency/service"
 	"net/http"
 )
@@ -19,5 +20,8 @@ func NewCarDetailsControler(s service.CarDetailsService) CarDetailsControler {
 }
 
 func (*controller) GetCarDetails(response http.ResponseWriter, request *http.Request) {
-
+	response.Header().Set("Content-Type", "application/json")
+	respApi := carDetailService.GetDetails()
+	response.WriteHeader(http.StatusOK)
+	json.NewEncoder(response).Encode(respApi)
 }
